@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="YHA企画合同会社は「福業エージェント」として、EC・通販、環境エネルギー、投資コンサル、飲食・健康、人材育成の5領域から、持続可能な豊かさを共創します。">
+    <title>YHA企画合同会社 | 福業エージェント - 未来を共創するパートナー</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* ===========================
+           CSS カスタム変数
+        =========================== */
+        :root {
+            --primary:   #1e3a8a;
+            --secondary: #0d9488;
+            --accent:    #f59e0b;
+        }
+
+        /* ===========================
+           ベーススタイル
+        =========================== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* セリフ体ユーティリティ */
+        .serif {
+            font-family: 'Bodoni Moda', serif;
+        }
+
+        /* ===========================
+           スクロールアニメーション
+        =========================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===========================
+           グラスモーフィズム
+        =========================== */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* ===========================
+           ヒーロー背景（パララックス）
+        =========================== */
+        .hero-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* モバイルではパララックスを無効化（パフォーマンス対策） */
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
+        }
+
+        /* ===========================
+           グラデーションテキスト
+        =========================== */
+        .text-gradient {
+            background: linear-gradient(to right, #bfdbfe, #99f6e4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===========================
+           ステップ番号（大きな背景数字）
+        =========================== */
+        .step-number {
+            font-size: 5rem;
+            line-height: 1;
+            opacity: 0.08;
+            position: absolute;
+            top: -1.25rem;
+            left: -0.75rem;
+            font-weight: 800;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* ===========================
+           ヘッダー縮小トランジション
+        =========================== */
+        header {
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ===========================
+           モバイルメニュー
+        =========================== */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        #mobile-menu.open {
+            max-height: 400px;
+        }
+
+        /* ===========================
+           FAQアコーディオン
+        =========================== */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- =============================
+         ヘッダー（固定ナビゲーション）
+    ============================== -->
+    <header id="main-header" class="fixed w-full z-50 glass border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- メインナビゲーション行 -->
+            <div class="h-20 flex justify-between items-center transition-all duration-300">
+
+                <!-- ロゴ -->
+                <a href="#" class="flex flex-col leading-none">
+                    <span class="text-2xl font-bold tracking-tighter text-blue-900 serif italic">YHA Planning</span>
+                    <span class="text-[10px] tracking-[0.2em] text-gray-500 uppercase mt-0.5">Fukugyo Agent</span>
+                </a>
+
+                <!-- PCナビゲーション -->
+                <nav class="hidden lg:flex space-x-10 text-sm font-bold text-gray-600 uppercase tracking-widest">
+                    <a href="#about"   class="hover:text-blue-900 transition-colors duration-200">Philosophy</a>
+                    <a href="#services" class="hover:text-blue-900 transition-colors duration-200">Business</a>
+                    <a href="#flow"    class="hover:text-blue-900 transition-colors duration-200">Flow</a>
+                    <a href="#faq"     class="hover:text-blue-900 transition-colors duration-200">FAQ</a>
+                    <a href="#company" class="hover:text-blue-900 transition-colors duration-200">Company</a>
+                </nav>
+
+                <!-- ハンバーガーボタン（モバイル） -->
+                <button id="menu-toggle" class="lg:hidden p-2 text-blue-900 focus:outline-none" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg id="icon-open"  class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- モバイルメニュー（ドロップダウン） -->
+            <div id="mobile-menu" role="navigation" aria-label="モバイルメニュー">
+                <nav class="flex flex-col space-y-1 pb-4 text-sm font-bold text-gray-700 uppercase tracking-widest">
+                    <a href="#about"    class="block py-3 px-2 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors" onclick="closeMenu()">Philosophy</a>
+                    <a href="#services" class="block py-3 px-2 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors" onclick="closeMenu()">Business</a>
+                    <a href="#flow"     class="block py-3 px-2 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors" onclick="closeMenu()">Flow</a>
+                    <a href="#faq"      class="block py-3 px-2 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors" onclick="closeMenu()">FAQ</a>
+                    <a href="#company"  class="block py-3 px-2 hover:text-blue-900 hover:bg-blue-50 rounded transition-colors" onclick="closeMenu()">Company</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- =============================
+         メインビジュアル（ヒーロー）
+    ============================== -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+
+        <!-- 背景画像とオーバーレイ -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-blue-900/60 to-slate-900/80 z-10"></div>
+            <div class="w-full h-full hero-bg"
+                 style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000');">
+            </div>
+        </div>
+
+        <!-- ヒーローコンテンツ -->
+        <div class="relative z-20 text-center px-6 max-w-5xl mx-auto">
+            <span class="inline-block px-4 py-1 border border-white/30 text-white text-xs tracking-[0.4em] uppercase mb-8 backdrop-blur-sm reveal">
+                Visionary Partnership
+            </span>
+
+            <h1 class="text-5xl md:text-8xl font-bold text-white mb-8 serif italic leading-tight reveal">
+                Prosperity Beyond<br>
+                <span class="text-gradient">the Business.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed mb-12 font-light reveal">
+                「副業」を、人生を豊かにする「福業」へ。<br class="hidden sm:block">
+                YHA企画は、多角的な視点からあなたの事業と生活を<br class="hidden sm:block">
+                最適化するエージェントです。
+            </p>
+
+            <div class="reveal">
+                <a href="#services"
+                   class="inline-block bg-white text-blue-900 px-10 py-4 font-bold tracking-widest
+                          hover:bg-blue-700 hover:text-white transition-all duration-300 shadow-2xl">
+                    EXPLORE BUSINESS
+                </a>
+            </div>
+        </div>
+
+        <!-- スクロールインジケーター -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+            <div class="w-px h-24 bg-gradient-to-b from-white/60 to-transparent mx-auto"></div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         フィロソフィー（Our Philosophy）
+    ============================== -->
+    <section id="about" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+                <!-- 画像 -->
+                <div class="relative reveal">
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-50 -z-10 rounded-full"></div>
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=1200"
+                         alt="ビジネスパーソン"
+                         class="shadow-2xl grayscale hover:grayscale-0 transition-all duration-700 w-full object-cover">
+                </div>
+
+                <!-- テキスト -->
+                <div class="reveal">
+                    <span class="text-blue-600 font-bold tracking-[0.3em] uppercase text-sm mb-4 block">Our Philosophy</span>
+                    <h2 class="text-4xl font-bold mb-8 leading-tight">
+                        「福業」が、<br>社会の新しいスタンダードへ。
+                    </h2>
+                    <p class="text-gray-600 leading-loose mb-6">
+                        YHA企画合同会社が提唱する「福業エージェント」とは、単に収入を増やすための手段を提案する場所ではありません。
+                        私たちが提供するのは、個人の能力開発、健康、資産形成、そして社会貢献。
+                        これらが調和して初めて「福」が生まれると考えます。
+                    </p>
+                    <p class="text-gray-600 leading-loose mb-10">
+                        IT通販からエネルギー、教育まで。一見バラバラに見える5つの事業は、
+                        すべてが「持続可能な豊かさ」という一本の線で繋がっています。
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-900 flex items-center justify-center text-white flex-shrink-0">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="font-bold text-blue-900 tracking-wider">信頼と実績に基づく伴走型サポート</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         サービス（Core Business Units）
+    ============================== -->
+    <section id="services" class="py-32 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- セクションタイトル -->
+            <div class="text-center mb-24 reveal">
+                <h2 class="text-4xl font-bold mb-4 serif italic">Core Business Units</h2>
+                <div class="w-12 h-1 bg-blue-900 mx-auto"></div>
+                <p class="mt-8 text-gray-500 tracking-[0.2em] uppercase text-sm font-bold">多角的なアプローチによる価値の創造</p>
+            </div>
+
+            <div class="space-y-32">
+
+                <!-- サービス 01: EC・通販 -->
+                <div class="grid lg:grid-cols-2 gap-16 items-center reveal">
+                    <div class="order-2 lg:order-1">
+                        <span class="text-blue-600 font-bold text-sm mb-2 block serif">01.</span>
+                        <h3 class="text-3xl font-bold mb-6">次世代EC・通販プロデュース</h3>
+                        <p class="text-gray-600 leading-relaxed mb-8">
+                            単に物を売るだけでなく、ストーリーを売る通販事業を構築します。
+                            最新のデジタルマーケティングと物流最適化を組み合わせ、
+                            小規模からでもスケール可能なビジネスモデルを設計します。
+                        </p>
+                        <ul class="grid grid-cols-2 gap-4 text-sm font-bold text-blue-900">
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>SNS連動型販売
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>在庫最適化戦略
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>ブランディング支援
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>グローバル展開
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=1200"
+                             alt="EC・通販プロデュース"
+                             class="rounded-br-[80px] shadow-xl w-full object-cover">
+                    </div>
+                </div>
+
+                <!-- サービス 02: 環境エネルギー・不動産 -->
+                <div class="grid lg:grid-cols-2 gap-16 items-center reveal">
+                    <div>
+                        <img src="yha.jpg"
+                             alt="環境エネルギー・不動産"
+                             class="rounded-tl-[80px] shadow-xl w-full object-cover">
+                    </div>
+                    <div>
+                        <span class="text-blue-600 font-bold text-sm mb-2 block serif">02.</span>
+                        <h3 class="text-3xl font-bold mb-6">環境エネルギー・不動産普及活動</h3>
+                        <p class="text-gray-600 leading-relaxed mb-8">
+                            再生可能エネルギーの導入支援を通じ、環境負荷の低減とコスト削減を両立。
+                            不動産の有効活用と組み合わせ、長期的な収益基盤と社会貢献を
+                            同時に実現するスキームを提供します。
+                        </p>
+                        <ul class="grid grid-cols-2 gap-4 text-sm font-bold text-blue-900">
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>太陽光発電コンサル
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>遊休地活用相談
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>SDGs経営支援
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></span>資産価値向上提案
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- サービス 03: 投資・コンサル -->
+                <div class="grid lg:grid-cols-2 gap-16 items-center reveal">
+                    <div class="order-2 lg:order-1">
+                        <span class="text-blue-600 font-bold text-sm mb-2 block serif">03.</span>
+                        <h3 class="text-3xl font-bold mb-6">戦略的投資・ビジネスコンサル</h3>
+                        <p class="text-gray-600 leading-relaxed mb-8">
+                            市場分析に基づいた投資判断から、現場レベルのオペレーション改善まで。
+                            確かな知見に基づき、経営者の「次の一手」を明確にします。
+                            変化をチャンスに変える戦略を共に練り上げます。
+                        </p>
+                        <blockquote class="p-6 bg-white border-l-4 border-blue-900 italic text-gray-500 leading-relaxed">
+                            "データに基づき、情熱で動かす。それが我々のコンサルティングスタイルです。"
+                        </blockquote>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=1200"
+                             alt="戦略的投資・ビジネスコンサル"
+                             class="rounded-bl-[80px] shadow-xl w-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- サービス 04・05（ミニグリッド） -->
+            <div class="grid md:grid-cols-2 gap-8 mt-32 reveal">
+                <div class="bg-white p-10 shadow-lg group hover:bg-blue-900 transition-colors duration-500">
+                    <h4 class="text-2xl font-bold mb-4 group-hover:text-white transition-colors">
+                        04. 飲食・健康体質改善
+                    </h4>
+                    <p class="text-gray-500 group-hover:text-blue-100 transition-colors leading-relaxed">
+                        「身体こそが最大の資本」という考えのもと、飲食店経営の最適化と、
+                        エグゼクティブ向けの健康管理・体質改善コンサルティングを実施します。
+                    </p>
+                </div>
+                <div class="bg-white p-10 shadow-lg group hover:bg-blue-900 transition-colors duration-500">
+                    <h4 class="text-2xl font-bold mb-4 group-hover:text-white transition-colors">
+                        05. 人材育成・教育事業
+                    </h4>
+                    <p class="text-gray-500 group-hover:text-blue-100 transition-colors leading-relaxed">
+                        潜在能力を引き出す独自の教育カリキュラムを提供。
+                        変化の時代を勝ち抜くための「自律型人材」の育成を
+                        多角的な研修で支援します。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         フロー（Our Process）
+    ============================== -->
+    <section id="flow" class="py-32 bg-blue-900 text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- セクションタイトル -->
+            <div class="text-center mb-24 reveal">
+                <h2 class="text-4xl font-bold mb-4 serif italic">Our Process</h2>
+                <div class="w-12 h-1 bg-white/30 mx-auto"></div>
+                <p class="mt-8 text-blue-200 tracking-[0.2em] uppercase text-sm font-bold">成功へのステップ</p>
+            </div>
+
+            <!-- 4ステップ -->
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-12 relative">
+
+                <div class="reveal relative">
+                    <span class="step-number text-white italic serif">01</span>
+                    <h5 class="text-xl font-bold mb-4 relative z-10">ヒアリング</h5>
+                    <p class="text-blue-100 text-sm leading-relaxed">
+                        現状の課題や将来のビジョンを深くお聞きします。
+                        形式的な打ち合わせではなく、想いを共有する時間です。
+                    </p>
+                </div>
+
+                <div class="reveal relative">
+                    <span class="step-number text-white italic serif">02</span>
+                    <h5 class="text-xl font-bold mb-4 relative z-10">多角分析・立案</h5>
+                    <p class="text-blue-100 text-sm leading-relaxed">
+                        5つの事業領域の視点から、最適な組み合わせと戦略を
+                        オーダーメイドで構築します。
+                    </p>
+                </div>
+
+                <div class="reveal relative">
+                    <span class="step-number text-white italic serif">03</span>
+                    <h5 class="text-xl font-bold mb-4 relative z-10">実装・実行</h5>
+                    <p class="text-blue-100 text-sm leading-relaxed">
+                        計画を絵に描いた餅にせず、現場レベルでの実装を
+                        伴走型で徹底的にサポートします。
+                    </p>
+                </div>
+
+                <div class="reveal relative">
+                    <span class="step-number text-white italic serif">04</span>
+                    <h5 class="text-xl font-bold mb-4 relative z-10">自走支援</h5>
+                    <p class="text-blue-100 text-sm leading-relaxed">
+                        最終的にはクライアント自身で改善を回せる「自立」した状態を目指し、
+                        ノウハウを共有します。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         FAQ（よくあるご質問）
+    ============================== -->
+    <section id="faq" class="py-32 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+
+            <!-- セクションタイトル -->
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-bold mb-4 serif italic">FAQ</h2>
+                <p class="text-gray-400 uppercase tracking-widest text-xs">よくあるご質問</p>
+            </div>
+
+            <!-- FAQ リスト（アコーディオン） -->
+            <div class="space-y-4 reveal">
+
+                <!-- FAQ 1 -->
+                <div class="faq-item border border-gray-100 rounded-lg overflow-hidden hover:border-blue-200 transition-colors">
+                    <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-inset"
+                            aria-expanded="false">
+                        <span class="font-bold text-lg flex items-center">
+                            <span class="text-blue-600 mr-3 flex-shrink-0">Q.</span>
+                            「福業」とはどのような意味ですか？
+                        </span>
+                        <svg class="faq-icon w-5 h-5 text-blue-600 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-gray-600 px-6 pb-5 pl-14 leading-relaxed">
+                            単なる労働の対価としての「副業」ではなく、本業や生活に幸せな影響（福）をもたらす、
+                            多角的な活動を指しています。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item border border-gray-100 rounded-lg overflow-hidden hover:border-blue-200 transition-colors">
+                    <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-inset"
+                            aria-expanded="false">
+                        <span class="font-bold text-lg flex items-center">
+                            <span class="text-blue-600 mr-3 flex-shrink-0">Q.</span>
+                            コンサルティングの範囲はどこまでですか？
+                        </span>
+                        <svg class="faq-icon w-5 h-5 text-blue-600 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-gray-600 px-6 pb-5 pl-14 leading-relaxed">
+                            初期戦略の立案から、実際のサイト構築、エネルギー導入の折衝、社員教育まで、
+                            多岐にわたる実行をサポートします。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item border border-gray-100 rounded-lg overflow-hidden hover:border-blue-200 transition-colors">
+                    <button class="faq-trigger w-full text-left px-6 py-5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-inset"
+                            aria-expanded="false">
+                        <span class="font-bold text-lg flex items-center">
+                            <span class="text-blue-600 mr-3 flex-shrink-0">Q.</span>
+                            小規模な個人事業主でも相談可能ですか？
+                        </span>
+                        <svg class="faq-icon w-5 h-5 text-blue-600 flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p class="text-gray-600 px-6 pb-5 pl-14 leading-relaxed">
+                            もちろんです。私たちは規模よりも「共に価値を創れるか」という志を重視しています。
+                            まずはお気軽にご相談ください。
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         会社概要（Corporate Profile）
+    ============================== -->
+    <section id="company" class="py-32 bg-slate-100 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-blue-900/5 -skew-x-12 pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-20">
+
+                <!-- 会社情報テーブル -->
+                <div class="reveal">
+                    <h2 class="text-4xl font-bold mb-12 serif italic">Corporate Profile</h2>
+                    <table class="w-full text-left">
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <th class="py-6 pr-6 text-gray-500 font-medium text-sm tracking-widest uppercase whitespace-nowrap w-32">Company</th>
+                                <td class="py-6 font-bold text-blue-900">YHA企画合同会社</td>
+                            </tr>
+                            <tr>
+                                <th class="py-6 pr-6 text-gray-500 font-medium text-sm tracking-widest uppercase whitespace-nowrap">CEO</th>
+                                <td class="py-6 font-bold text-blue-900">吉田 裕幸</td>
+                            </tr>
+                            <tr>
+                                <th class="py-6 pr-6 text-gray-500 font-medium text-sm tracking-widest uppercase whitespace-nowrap align-top">Location</th>
+                                <td class="py-6 text-gray-700 leading-relaxed">
+                                    〒223-0055<br>
+                                    神奈川県横浜市港北区<br>
+                                    綱島上町1-1 GSC4-807
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Google マップ -->
+                <div class="reveal">
+                    <div class="w-full h-96 overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3245.8!2d139.6745!3d35.5455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185e8e0a5e5555%3A0x0!2z57eo5bO2546J5Yy65rK85YaF5Lq655S677yQ77yR!5e0!3m2!1sja!2sjp!4v1700000000000"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="YHA企画合同会社 所在地マップ">
+                        </iframe>
+                    </div>
+                    <p class="mt-3 text-xs text-gray-400 tracking-widest">
+                        神奈川県横浜市港北区綱島上町1-1 GSC4-807
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =============================
+         フッター
+    ============================== -->
+    <footer class="bg-slate-900 text-white py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+
+            <!-- ロゴ・キャッチコピー -->
+            <div>
+                <div class="text-3xl font-bold serif italic mb-2">YHA Planning</div>
+                <p class="text-gray-500 text-sm tracking-widest uppercase italic">Fukugyo Agent Agency</p>
+            </div>
+
+            <!-- フッターリンク -->
+            <nav class="flex flex-wrap justify-center gap-8 text-xs font-bold tracking-widest uppercase text-gray-400">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Use</a>
+                <a href="#company" class="hover:text-white transition-colors">Access</a>
+            </nav>
+        </div>
+
+        <!-- コピーライト -->
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] tracking-[0.3em] uppercase text-gray-600">
+            <p>© 2025 YHA Planning G.K. All rights reserved.</p>
+            <p class="font-light">Crafting New Standards for Your Happiness.</p>
+        </div>
+    </footer>
+
+
+    <!-- =============================
+         JavaScript
+    ============================== -->
+    <script>
+        /* ===========================
+           スクロールリビールアニメーション
+        =========================== */
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+        /* ===========================
+           ヘッダー スクロール縮小
+        =========================== */
+        const header    = document.getElementById('main-header');
+        const navInner  = header.querySelector('div > div');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                header.classList.add('scrolled');
+                navInner.classList.remove('h-20');
+                navInner.classList.add('h-14');
+            } else {
+                header.classList.remove('scrolled');
+                navInner.classList.remove('h-14');
+                navInner.classList.add('h-20');
+            }
+        }, { passive: true });
+
+
+        /* ===========================
+           モバイルメニュー 開閉
+        =========================== */
+        const menuToggle  = document.getElementById('menu-toggle');
+        const mobileMenu  = document.getElementById('mobile-menu');
+        const iconOpen    = document.getElementById('icon-open');
+        const iconClose   = document.getElementById('icon-close');
+
+        menuToggle.addEventListener('click', () => {
+            const isOpen = mobileMenu.classList.toggle('open');
+            iconOpen.classList.toggle('hidden', isOpen);
+            iconClose.classList.toggle('hidden', !isOpen);
+            menuToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+            menuToggle.setAttribute('aria-expanded', 'false');
+        }
+
+
+        /* ===========================
+           FAQアコーディオン
+        =========================== */
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item   = trigger.closest('.faq-item');
+                const answer = item.querySelector('.faq-answer');
+                const isOpen = item.classList.contains('open');
+
+                // 他のFAQを閉じる
+                document.querySelectorAll('.faq-item.open').forEach(openItem => {
+                    openItem.classList.remove('open');
+                    openItem.querySelector('.faq-answer').classList.remove('open');
+                    openItem.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+                });
+
+                // クリックしたFAQを開閉
+                if (!isOpen) {
+                    item.classList.add('open');
+                    answer.classList.add('open');
+                    trigger.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
